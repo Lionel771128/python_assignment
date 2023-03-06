@@ -39,7 +39,6 @@ git clone https://github.com/username/financial-api.git
 ```
 cd python_assignment
 pip install -r requirements.txt
-
 ```
 
 3. Run Server:
@@ -48,10 +47,10 @@ pip install -r requirements.txt
 docker compose up -d
 ```
 
-4. Initial the database
-p.s. Before you initial the database, please edit the db host in config.ini.
-     The default value is container name, so when initial the database, 
-     change it to the database server's IP.
+4. Initial the database <br>
+   Before you initial the database, please edit the db host in config.ini.
+   The default value is container name, so when initial the database, 
+   change it to the database server's IP.
 ```
 python get_raw_data.py
 ```
