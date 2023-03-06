@@ -3,7 +3,16 @@ import mysql.connector
 import requests
 import utils
 
+"""
+Create a MySQL connection object using the provided configuration.
 
+Args:
+    db_config: A dictionary containing the MySQL database configuration parameters.
+    choose_db: A boolean indicating whether to connect to a specific database. Default is True.
+
+Returns:
+    A MySQL connection object.
+"""
 def create_mysql_connection(db_config, choose_db=True):
     conn = mysql.connector.connect(
         host=db_config["host"],
@@ -15,6 +24,16 @@ def create_mysql_connection(db_config, choose_db=True):
     return conn
 
 
+
+"""
+Retrieve financial data from the Alpha Vantage API.
+
+Args:
+    alpha_vantage_api_config: A dictionary containing the configuration parameters for the Alpha Vantage API.
+
+Returns:
+    A list of financial data dictionaries, with one dictionary per day per symbol.
+"""
 def get_raw_data(alpha_vantage_api_config):
     financial_data = []
     days = 14
@@ -46,6 +65,17 @@ def get_raw_data(alpha_vantage_api_config):
     return financial_data
 
 
+
+"""
+Insert financial data into the MySQL database.
+
+Args:
+    db_config: A dictionary containing the MySQL database configuration parameters.
+    financial_data: A list of financial data dictionaries, with one dictionary per day per symbol.
+
+Returns:
+    None.
+"""
 def insert_to_db(db_config, financial_data):
     db_conn = create_mysql_connection(db_config, choose_db=True)
     # Insert records into the financial_data table in the MySQL database
@@ -56,6 +86,12 @@ def insert_to_db(db_config, financial_data):
         print(cursor.rowcount, "records inserted into the financial_data table")
 
 
+"""
+Create a MySQL database by executing a Data Definition Language (DDL) script.
+
+Args:
+    db_config (dict): A dictionary containing the database configuration parameters.
+"""
 def create_db_by_ddl(db_config):
     db_conn = create_mysql_connection(db_config, choose_db=False)
     cursor = db_conn.cursor()

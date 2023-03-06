@@ -5,13 +5,23 @@ from financial.financial_data_dao import FinancialDataDao
 
 app = FastAPI()
 
+# Load database configuration from config.ini file
 db_cfg = utils.get_config("config.ini", "db")
+
 # Define default limit and error message
 DEFAULT_LIMIT = 5
 ERROR_MSG = {'error': ''}
 
 
-# Helper function to format result set
+"""
+Helper function to format result set
+
+Args:
+- rs: ResultSet object containing financial data
+
+Returns:
+- A list of dictionaries representing formatted financial data
+"""
 def format_result_set(rs):
     results = []
     for row in rs:
@@ -26,6 +36,20 @@ def format_result_set(rs):
     return results
 
 
+
+"""
+API endpoint to retrieve financial data
+
+Args:
+- start_date: optional string representing the start date of the financial data
+- end_date: optional string representing the end date of the financial data
+- symbol: optional string representing the stock symbol of the financial data
+- limit: optional integer representing the maximum number of financial data to retrieve per page (default is 5)
+- page: optional integer representing the page number of the financial data to retrieve (default is 1)
+
+Returns:
+- A dictionary containing the financial data, pagination information, and error message (if any)
+"""
 # API endpoint to retrieve financial data
 @app.get('/api/financial_data')
 def get_financial_data(
@@ -37,6 +61,7 @@ def get_financial_data(
 ):
     try:
         financial_data_dao = FinancialDataDao(db_cfg)
+
         # Calculate offset based on page number and limit
         offset = (page - 1) * limit
 
@@ -58,6 +83,7 @@ def get_financial_data(
             'pages': pages
         }
     except Exception as e:
+        # Raise HTTPException if there's an error retrieving financial data
         raise HTTPException(status_code=500, detail=f"status_cod:500, info: {e.msg}")
 
     return {
@@ -67,11 +93,22 @@ def get_financial_data(
     }
 
 
-# Define the endpoint for the Get statistics API
+"""
+API endpoint to retrieve statistics based on financial data
+
+Args:
+- start_date: string representing the start date of the financial data
+- end_date: string representing the end date of the financial data
+- symbol: string representing the stock symbol of the financial data
+
+Returns:
+- A dictionary containing the statistics data and error message (if any)
+"""
 @app.get("/api/statistics")
 async def get_statistics(start_date: str, end_date: str, symbol: str):
 
     try:
+        # get the average values
         financial_data_dao = FinancialDataDao(db_cfg)
         average_daily_open_price = financial_data_dao.get_average_daily_open_price(start_date, end_date, symbol)
         average_daily_close_price = financial_data_dao.get_average_daily_close_price(start_date, end_date, symbol)
@@ -85,6 +122,7 @@ async def get_statistics(start_date: str, end_date: str, symbol: str):
             "average_daily_volume": average_daily_volume
         }
     except Exception as e:
+        # Raise HTTPException if there's an error retrieving financial data
         raise HTTPException(status_code=500, detail=f"status_cod:500, info: {e.msg}")
 
     return {"data": statistics, "info": {"error": ""}}
