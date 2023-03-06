@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: qazxsw
+      TZ: Asia/Taipei
+
+  api_service:
+    container_name: 'api'
+    command: 'uvicorn financial.api:app --host 0.0.0.0 --port 8087'
+    ports:
+      - "8087:8087"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - api_service_data:/python_assignment
+    depends_on:
+      - db
+    networks:
+      - app
+
+networks:
+  app:
+
+volumes:
+  mysql_data:
+  api_service_data:
