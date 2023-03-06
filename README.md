@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 ```
 
-3.Run Server:
+3. Run Server:
 
 ```
 docker compose up -d
@@ -58,12 +58,26 @@ python get_raw_data.py
 
 ## Maintaining the API Key
 
-To retrieve financial data from AlphaVantage, you need an API key. To maintain the API key in both local development and production environments, follow these steps:
+To stored API KEY securely, I don't set the API KEY in the config.ini. <br>
+And to maintain easily , you can store your API KEY file at every folder you want, <br>
+when you want to change the key, just edit the config.ini and do all following step at **Maintain the API KEY**
 
-1. Create an account on the AlphaVantage website to obtain an API key.
+### Setting API KEY before run service
 
-2. In your local development environment, set the `ALPHA_VANTAGE_API_KEY` environment variable to the API key. You can set this variable in a shell script or in your IDE's configuration.
+Before you run server, please set the API Key's file path in Config.ini.
 
-3. In the production environment, you should store the API key as a secret or environment variable in your deployment tool (e.g. Kubernetes, Docker Swarm, AWS ECS). Avoid storing the API key in your code or in plain text files.
 
-4. If you need to rotate the API key, update the environment variable or secret in all relevant places. Make sure to update any documentation or scripts that reference the API key as well.
+### Maintain the API KEY
+
+1. Edit API Key's file path in Config.ini.
+
+2. docker cp to the api container
+```
+docker cp [API KEY file path] api:[API KEY location]
+```
+
+3. restart service
+
+```
+docker restart api
+```
