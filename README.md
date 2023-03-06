@@ -37,7 +37,7 @@ cd python_assignment
 pip install -r requirements.txt
 ```
 
-3. Run Server:
+3. Run Service:
 
 ```
 docker compose up -d
@@ -59,7 +59,7 @@ when you want to change the key, just edit the config.ini and do all following s
 
 ### Setting API KEY before run service
 
-Before you run server, please set the API Key's file path in Config.ini.
+Before you run service, please set the API Key's file path in Config.ini.
 
 
 ### Maintain the API KEY
