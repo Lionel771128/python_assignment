@@ -24,6 +24,8 @@ The project uses the following technologies:
 
 To run the project locally, follow these steps:
 
+0. You should install Python3.11.2
+
 1. Clone the repository:
 
 ```
