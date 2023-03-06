@@ -68,7 +68,8 @@ Before you run service, please set the API Key's file path to config.ini.
 
 2. docker cp to the api container
 ```
-docker cp [config.ini path] api:[config.ini location]
+docker cp [API Key's file path] api:[API Key's file path]
+docker cp [config.ini file path] api:[config.ini file path]
 ```
 
 3. restart service
