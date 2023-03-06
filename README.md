@@ -1,16 +1,13 @@
 # python_assignment
 
----
 
 ## Description
 
----
 
 This project provides a RESTful API to retrieve financial data from AlphaVantage. The API supports various endpoints to retrieve stock prices, exchange rates, and technical indicators for a given symbol and time period.
 
 ## Tech Stack
 
----
 
 The project uses the following technologies:
 
@@ -24,7 +21,6 @@ The project uses the following technologies:
 
 ## How to Run
 
----
 
 To run the project locally, follow these steps:
 
