@@ -59,16 +59,16 @@ when you want to change the key, just edit the config.ini and do all following s
 
 ### Setting API KEY before run service
 
-Before you run service, please set the API Key's file path in Config.ini.
+Before you run service, please set the API Key's file path to config.ini.
 
 
 ### Maintain the API KEY
 
-1. Edit API Key's file path in Config.ini.
+1. Edit API Key's file path to config.ini.
 
 2. docker cp to the api container
 ```
-docker cp [API KEY file path] api:[API KEY location]
+docker cp [config.ini path] api:[config.ini location]
 ```
 
 3. restart service
